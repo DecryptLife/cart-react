@@ -1,0 +1,22 @@
+.main-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container .child {
+  flex: 1;
+}
+
+.inventory-container,
+.cart-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

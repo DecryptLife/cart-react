@@ -1,0 +1,36 @@
+.list__item-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid black;
+  padding: 1.5rem;
+  gap: 2rem;
+  border-radius: 10px;
+  background-color: bisque;
+  font-size: x-large;
+}
+
+.item__action-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.item__action-btns button {
+  color: white;
+  height: 2rem;
+  width: 2rem;
+  font-size: x-large;
+  font-weight: bold;
+  border-radius: 1rem;
+  border: 1px solid white;
+}
+
+.item__btn-add {
+  background-color: green;
+}
+
+.item__btn-remove {
+  background-color: red;
+}
