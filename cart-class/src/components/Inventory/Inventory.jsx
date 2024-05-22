@@ -1,17 +1,27 @@
 import React, { Component } from "react";
 import "../Inventory/inventory.css";
 import InventoryItem from "./InventoryItem";
+import PaginationBtns from "../Pagination/PaginationBtns";
 
 export default class Inventory extends Component {
   render() {
-    const { items, handleCountUpdate, handleAddToCart, handleUpdateCart } =
-      this.props;
+    const {
+      items,
+      handleCountUpdate,
+      handleAddToCart,
+      handleUpdateCart,
+      inventoryPaginated,
+      handleDisplayPage,
+      currentPage,
+    } = this.props;
+
+    console.log("Paginated: ", inventoryPaginated);
     return (
       <div className="inventory-container">
         <h1 className="text-color">INVENTORY</h1>
         <div className="list-container">
-          {items &&
-            items.map((item) => {
+          {inventoryPaginated &&
+            inventoryPaginated.map((item) => {
               return (
                 <InventoryItem
                   key={item.id}
@@ -23,6 +33,14 @@ export default class Inventory extends Component {
               );
             })}
         </div>
+        {items && (
+          <PaginationBtns
+            items={items}
+            itemsPerPage={3}
+            handleDisplayPage={handleDisplayPage}
+            currentPage={currentPage}
+          />
+        )}
       </div>
     );
   }

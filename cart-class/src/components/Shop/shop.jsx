@@ -8,10 +8,13 @@ import { checkout, deleteFromCart, getCart } from "../../APIs/cartAPI";
 export default class Shop extends Component {
   constructor(props) {
     super(props);
-
+    this.itemsPerPage = 3;
+    this.totalPages = null;
     this.state = {
       inventory: [],
       cart: [],
+      currentPage: 0,
+      inventoryPaginated: [],
     };
   }
 
@@ -19,8 +22,11 @@ export default class Shop extends Component {
     try {
       const inventoryData = await getInventory();
 
+      this.totalPages = Math.ceil(inventoryData.length / this.itemsPerPage);
+
       const cartData = await getCart();
       this.setState({
+        ...this.state,
         inventory: inventoryData.map((inv_item) => {
           return {
             ...inv_item,
@@ -28,7 +34,17 @@ export default class Shop extends Component {
           };
         }),
         cart: cartData,
+        inventoryPaginated: inventoryData
+          .slice(0, this.itemsPerPage)
+          .map((inv_item) => {
+            return {
+              ...inv_item,
+              count: 0,
+            };
+          }),
       });
+
+      console.log("Test: ", this.state.inventoryPaginated);
     } catch (e) {
       console.log(e);
     }
@@ -41,6 +57,14 @@ export default class Shop extends Component {
       console.log("add btn clicked");
       this.setState({
         ...this.state,
+        inventoryPaginated: this.state.inventoryPaginated.map((item) => {
+          if (item.id === id) {
+            return {
+              ...item,
+              count: item.count + 1,
+            };
+          } else return item;
+        }),
         inventory: this.state.inventory.map((item) => {
           if (item.id === id) {
             return {
@@ -53,6 +77,14 @@ export default class Shop extends Component {
     } else if (classname === "item__btn-remove") {
       this.setState({
         ...this.state,
+        inventoryPaginated: this.state.inventoryPaginated.map((item) => {
+          if (item.id === id) {
+            return {
+              ...item,
+              count: Math.max(0, item.count - 1),
+            };
+          } else return item;
+        }),
         inventory: this.state.inventory.map((item) => {
           if (item.id === id) {
             return {
@@ -153,6 +185,24 @@ export default class Shop extends Component {
       console.log(e);
     }
   };
+
+  handleDisplayPage = (pgIdx) => {
+    // initially 0
+    // 0 -  0 * i + i, 1 * i - 1 * i + i
+    console.log("Handle pages called: ", pgIdx);
+    console.log("Total pages: ", this.totalPages);
+    if (pgIdx >= 0 && pgIdx < this.totalPages) {
+      const start = pgIdx * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+
+      console.log(`s: ${start} e: ${end}`);
+      this.setState({
+        ...this.state,
+        inventoryPaginated: this.state.inventory.slice(start, end),
+        currentPage: pgIdx,
+      });
+    }
+  };
   render() {
     return (
       <div className="container">
@@ -160,12 +210,15 @@ export default class Shop extends Component {
           <h1>BENSON'S MART</h1>
         </div>
         <div className="shop-container">
-          {this.state.inventory && (
+          {this.state.inventoryPaginated && (
             <Inventory
               items={this.state.inventory}
               handleCountUpdate={this.handleCountUpdate}
               handleAddToCart={this.handleAddToCart}
               handleUpdateCart={this.handleUpdateCart}
+              inventoryPaginated={this.state.inventoryPaginated}
+              handleDisplayPage={this.handleDisplayPage}
+              currentPage={this.state.currentPage}
             />
           )}
 
