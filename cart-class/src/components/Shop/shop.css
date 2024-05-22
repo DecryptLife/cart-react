@@ -11,6 +11,7 @@
   display: flex;
   align-items: center;
   width: 50%;
+  gap: 10px;
 }
 
 .list-container {
@@ -63,4 +64,24 @@
 
 .text-color {
   color: darkblue;
+}
+
+.pagination__btns-container {
+  height: 2rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pagination__btns-container > button {
+  height: 100%;
+  background-color: blue;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: bolder;
+  border: 1px solid white;
+}
+
+.pagination__number-btn {
+  width: 2rem;
+  border-radius: 2rem;
 }

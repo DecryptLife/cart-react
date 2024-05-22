@@ -9,7 +9,11 @@ export default class PaginationBtns extends Component {
     const buttons = [];
     for (let i = 1; i <= numOfPages; i++) {
       buttons.push(
-        <button key={i} onClick={() => handleDisplayPage(i - 1)}>
+        <button
+          key={i}
+          onClick={() => handleDisplayPage(i - 1)}
+          className="pagination__number-btn"
+        >
           {i}
         </button>
       );
