@@ -1,0 +1,31 @@
+.ds-container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.ds-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ds-content-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+select {
+  width: 8rem;
+}
+
+.container {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.select-container {
+  display: flex;
+  gap: 1rem;
+}
